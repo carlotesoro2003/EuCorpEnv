@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Operational Planning{% endblock %}
+
+{% block content %}
+<h1>Operational Planning </h1>
+
+ <!-- Display success or error messages -->
+ {% if messages %}
+ {% for message in messages %}
+     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+         {{ message }}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+         </button>
+     </div>
+ {% endfor %}
+{% endif %}
+
+<!-- Displaying the authenticated user's details -->
+<div class="row mt-4">
+  <div class="col-md-2 mb-3">
+    <a href="{% url 'plans' %}" class="btn btn-outline-primary btn-lg btn-block shadow-sm d-flex align-items-center justify-content-center" role="button">
+      <i class="fas fa-bullseye mr-2"></i>
+      Strategic Goals
+    </a>
+  </div>
+
+ 
+  
+  <div class="col-md-2 mb-3">
+    <a href="{% url 'keyAreas' %}" class="btn btn-outline-success btn-lg btn-block shadow-sm d-flex align-items-center justify-content-center" role="button">
+      <i class="fas fa-users mr-2"></i>
+      Teams
+    </a>
+  </div>
+
+  <div class="col-md-2 mb-3">
+    <a href="{% url 'keyAreas' %}" class="btn btn-outline-info btn-lg btn-block shadow-sm d-flex align-items-center justify-content-center" role="button">
+      <i class="fas fa-key mr-2"></i>
+      Key Areas
+    </a>
+  </div>
+</div>
+
+<a href="{% url 'addStratGoals' %}" class="btn btn-primary float-right mb-3 mt-3" style="background-color: #CF910C; border-radius: 5px; border: none;">Add Strategic Goal</a>
+
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th scope="col">Plans</th>
+      <th scope="col">Description</th>
+      <th scope="col">Members</th>
+      <th scope="col">Leads</th>
+      <th scope="col">Key Areas</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for strategicGoal in strategicGoals %}
+    <tr>
+      <th scope="row">Strategic Goal {{ strategicGoal.goal_id }}</th>
+      <td>{{ strategicGoal.name }}</td>
+      <td>
+        {{strategicGoal.members.count}}
+        <!-- {% for member in strategicGoal.members.all %}
+          {{ member.department}} {% if not forloop.last %}, {% endif %}
+        {% empty %}
+          No members assigned
+        {% endfor %} -->
+      </td>
+      <td>
+        {{strategicGoal.leads.count}}
+        <!-- {% for lead in strategicGoal.leads.all %}
+          {{ lead.position }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+          No leads assigned
+        {% endfor %} -->
+      </td>
+      <td>{{ strategicGoal.keyArea.name }}</td>
+      <td>
+        <a href="{% url 'strategicGoal' strategicGoal.goal_id %}" class="btn btn-success" style="border-radius: 5px; border: none;">View</a>
+        <a href="{% url 'deleteStratGoal' strategicGoal.goal_id %}" class="btn btn-danger" style="border-radius: 5px; border: none;">Delete</a>
+
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

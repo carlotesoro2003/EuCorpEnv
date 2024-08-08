@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Strategic Objectives{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Action Plans for Strategic Objective no {{ objective.objective_id }}</h1>
+    <p><strong>Description: </strong>{{ objective.kpi }}</p>
+
+    <!-- Display existing action plans if any -->
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Action Plan</th>
+                <th scope="col">KPI</th>
+                <th scope="col">Target Output</th>
+                <th scope="col">Person Responsible</th>
+                <th scope="col">Budget</th>
+                <th scope="col">Time Frame</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in actionPlans %}
+            <tr>
+                <td>{{ plan.actionPlan }}</td>
+                <td>{{ plan.kpi }}</td>
+                <td>{{ plan.targetOutput }}</td>
+                <td>{{ plan.personResponsible }}</td>
+                <td>{{ plan.budget }}</td>
+                <td>{{ plan.startDate }} to {{ plan.endDate }}</td>
+                <td>                
+                    <a href="{% url 'deleteActionPlan' plan_id=plan.plan_id goal_id=strategicGoal.goal_id objective_id=objective.objective_id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No action plans found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form method="post" action="" onsubmit="prepareFormData(event)">
+        {% csrf_token %}
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Action Plan</th>
+                    <th scope="col">KPI</th>
+                    <th scope="col">Target Output</th>
+                    <th scope="col">Person Responsible</th>
+                    <th scope="col">Budget</th>
+                    <th scope="col">Time Frame</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td contenteditable="true" id="actionPlan" class="editable"></td>
+                    <td contenteditable="true" id="kpi" class="editable"></td>
+                    <td contenteditable="true" id="targetOutput" class="editable"></td>
+                    <td contenteditable="true" id="personResponsible" class="editable"></td>
+                    <td contenteditable="true" id="budget" class="editable"></td>
+                    <td id="timeFrame">
+                        <div class="input-container">
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" name="startDate" class="editable" />
+                            <label for="endDate">End Date:</label>
+                            <input type="date" id="endDate" name="endDate" class="editable" />
+                        </div>
+                    </td>                    
+                    
+                    <td>
+                        <button type="submit" class="btn btn-success" style="border-radius: 5px; border: none;"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <!-- Hidden fields to store editable values -->
+        <input type="hidden" name="actionPlan" id="hiddenActionPlan">
+        <input type="hidden" name="kpi" id="hiddenKpi">
+        <input type="hidden" name="targetOutput" id="hiddenTargetOutput">
+        <input type="hidden" name="personResponsible" id="hiddenPersonResponsible">
+        <input type="hidden" name="budget" id="hiddenBudget">
+    </form>
+</div>
+
+<script>
+    function prepareFormData(event) {
+        event.preventDefault();
+
+        document.getElementById('hiddenActionPlan').value = document.getElementById('actionPlan').innerText.trim();
+        document.getElementById('hiddenKpi').value = document.getElementById('kpi').innerText.trim();
+        document.getElementById('hiddenTargetOutput').value = document.getElementById('targetOutput').innerText.trim();
+        document.getElementById('hiddenPersonResponsible').value = document.getElementById('personResponsible').innerText.trim();
+        document.getElementById('hiddenBudget').value = document.getElementById('budget').innerText.trim();
+        event.target.submit();
+    }
+</script>
+{% endblock %}

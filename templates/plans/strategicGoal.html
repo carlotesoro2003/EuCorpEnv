@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Strategic Goal Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">Strategic Goal {{ strategicGoal.goal_id }}</h1>
+
+    <p><strong>Description:</strong> {{ strategicGoal.name }}</p>
+
+    <!-- Leads Section -->
+    <p><strong>Leads:</strong>
+        {% if strategicGoal.leads.exists %}
+            {% for lead in strategicGoal.leads.all %}
+                {% if not forloop.last %}
+                    {{ lead.position }},
+                {% else %}
+                    and {{ lead.position }}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            No leads assigned.
+        {% endif %}
+    </p>
+
+    <!-- Members Section -->
+    <p><strong>Members:</strong>
+        {% if strategicGoal.members.exists %}
+            {% for member in strategicGoal.members.all %}
+                {% if not forloop.last %}
+                    {{ member.department }},
+                {% else %}
+                    and {{ member.department }}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            No members assigned.
+        {% endif %}
+    </p>
+
+    <table class="table table-bordered mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">Key Result Area</th>
+                <th scope="col">Strategic Objectives</th>
+                <th scope="col">Key Performance Indicators</th>
+                <th scope="col">Target</th>
+                <th scope="col">Evaluation Measures</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for objective in objectives %}
+            <tr>
+                <td>{{ strategicGoal.keyArea.name }}</td>
+                <td>{{ objective.strategicObjectives }}</td>
+                <td>{{ objective.kpi }}</td>
+                <td>{{ objective.target }}</td>
+                <td>{{ objective.evalMeasures }}</td>
+                <td>
+                    <a href="{% url 'allActionPlans' goal_id=strategicGoal.goal_id objective_id=objective.objective_id %}" class="btn btn-success"><i class="fa-solid fa-eye"></i> View</a>
+                    <a href="{% url 'deleteStratObjective' id=objective.objective_id %}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No strategic objectives found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Input your Objectives Here</h3>
+    <form method="post" action="{% url 'createObjectives' goal_id=strategicGoal.goal_id %}" onsubmit="prepareFormData(event)">
+        {% csrf_token %}
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Key Result Area</th>
+                    <th scope="col">Strategic Objectives</th>
+                    <th scope="col">Key Performance Indicators</th>
+                    <th scope="col">Target</th>
+                    <th scope="col">Evaluation Measures</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ strategicGoal.keyArea.name }}</td>
+                    <td contenteditable="true" id="strategicObjectives" class="editable"></td>
+                    <td contenteditable="true" id="kpi" class="editable"></td>
+                    <td contenteditable="true" id="target" class="editable"></td>
+                    <td contenteditable="true" id="evalMeasures" class="editable"></td>
+                    <td>
+                        <button type="submit" class="btn btn-success" style="border-radius: 5px; border: none;"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <!-- Hidden fields to store editable values -->
+        <input type="hidden" name="strategicObjectives" id="hiddenStrategicObjectives">
+        <input type="hidden" name="kpi" id="hiddenKpi">
+        <input type="hidden" name="target" id="hiddenTarget">
+        <input type="hidden" name="evalMeasures" id="hiddenEvalMeasures">
+    </form>
+
+  
+
+    <!-- Button to navigate back to the Strategic Goals list -->
+    <a href="{% url 'plans' %}" class="btn btn-secondary mt-3 float-right">Back to Strategic Goals</a>
+</div>
+
+<script>
+    function prepareFormData(event) {
+        event.preventDefault();
+
+        // Set the values of the hidden fields from the contenteditable elements
+        document.getElementById('hiddenStrategicObjectives').value = document.getElementById('strategicObjectives').innerText.trim();
+        document.getElementById('hiddenKpi').value = document.getElementById('kpi').innerText.trim();
+        document.getElementById('hiddenTarget').value = document.getElementById('target').innerText.trim();
+        document.getElementById('hiddenEvalMeasures').value = document.getElementById('evalMeasures').innerText.trim();
+
+        // Submit the form
+        event.target.submit();
+    }
+</script>
+
+{% endblock %}

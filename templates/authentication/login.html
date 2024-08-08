@@ -1,0 +1,38 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title text-center py-3">Login to your account</h4>
+
+                    <!-- Display messages here -->
+                    {% include 'partials/messages.html' %}  
+
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="username" id="usernameField" class="form-control" placeholder="username" required>
+                            <div class="invalid-feedback" id="emailFeedback" style="display: none;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" name="password" id="passwordField" class="form-control" placeholder="password" required>
+                            <div class="invalid-feedback" id="passwordFeedback" style="display: none;"></div>
+                            <small class="float-right py-3" id="showPasswordToggle">Show password</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block" style="background-color: #CF910C; border-radius: 5px; border: none;">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

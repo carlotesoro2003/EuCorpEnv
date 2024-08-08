@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Key Areas</h1>
+<!-- Use Bootstrap's table and table-bordered classes for borders -->
+
+<div class="row mt-4">
+  <div class="col-md-4">
+    <a href="{% url 'plans' %}" class="btn btn-outline-primary btn-lg btn-block shadow-sm d-flex align-items-center justify-content-center" role="button">
+      <i class="fas fa-bullseye mr-2"></i>
+      Strategic Goals
+    </a>
+  </div>
+
+
+  <div class="col-md-2 mb-3">
+    <a href="{% url 'keyAreas' %}" class="btn btn-outline-info btn-lg btn-block shadow-sm d-flex align-items-center justify-content-center" role="button">
+      <i class="fas fa-key mr-2"></i>
+      Key Areas
+    </a>
+  </div>
+</div>
+
+<table class="table table-bordered mt-3" id="goalsTable">
+    <thead>
+        <tr>
+            <th scope="col">Key Area</th>
+            <th scope="col">Department</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for keyArea in keyAreas %}
+        <tr>
+            <td>{{ keyArea.name }}</td>
+            <td>{{ keyArea.department }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+

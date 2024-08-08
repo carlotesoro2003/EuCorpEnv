@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Details{% endblock %}
+
+{% block content %}
+<h1>User Details</h1>
+
+<!-- Displaying the authenticated user's details -->
+  <h2>Welcome, {{ first_name }} {{ last_name }}</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Email:</strong> {{ email }}</li>
+        <li class="list-group-item"><strong>Department:</strong> {{ department_name }}</li>
+        <li class="list-group-item"><strong>Contact Number:</strong> {{ contactNo }}</li>
+
+    </ul>
+
+{% endblock %}

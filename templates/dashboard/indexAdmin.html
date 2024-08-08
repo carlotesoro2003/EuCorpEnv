@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Profile{% endblock %}
+
+{% block content %}
+<h1>Admin Profile</h1>
+
+<!-- Display the admin's details -->
+<h2>Welcome, {{ first_name }} {{ last_name }}</h2>
+<p>Email: {{ email }}</p>
+
+{% endblock %}

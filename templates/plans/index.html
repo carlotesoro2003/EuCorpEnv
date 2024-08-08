@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Department Strategic Goals{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Strategic Goals for {{ departmentHead.department.name }}</h1>
+
+    {% if strategicGoals %}
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Goal ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Key Area</th>
+                    <th scope="col">Members</th>
+                    <th scope="col">Leads</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for goal in strategicGoals %}
+                    <tr>
+                        <td>{{ goal.goal_id }}</td>
+                        <td>{{ goal.name }}</td>
+                        <td>{{ goal.keyArea.name }}</td>
+                        <td>
+                            {% for member in goal.members.all %}
+                                 {{ member.department.name }}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for lead in goal.leads.all %}
+                                {{ lead.position }},
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <!-- Correct URL usage -->
+                            <a href="{% url 'actionPlans' goal_id=goal.goal_id %}" class="btn btn-success" style="border-radius: 5px; border: none;">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No strategic goals found for your department.</p>
+    {% endif %}
+</div>
+{% endblock %}

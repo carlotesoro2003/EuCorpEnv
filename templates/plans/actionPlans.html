@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Strategic Objectives{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Strategic Objectives for Goal {{ strategicGoal.goal_id }}</h1>
+    <p><strong>Description:</strong> {{ strategicGoal.name }}</p>
+    <p><strong>Key Area:</strong> {{ strategicGoal.keyArea.name }}</p>
+
+
+    {% if strategicObjectives %}
+        <ul class="list-group mt-3">
+            {% for objective in strategicObjectives %}
+                <li class="list-group-item mt-4">
+                    <strong>Objective:</strong> {{ objective.objective_id }}<br>
+                    <strong>Objective:</strong> {{ objective.strategicObjectives }}<br>
+                    <strong>KPI:</strong> {{ objective.kpi }}<br>
+                    <strong>Target:</strong> {{ objective.target }}<br>
+                    <strong>Evaluation Measures:</strong> {{ objective.evalMeasures }}
+                    <a href="{% url 'addActionPlans' goal_id=strategicGoal.goal_id objective_id=objective.objective_id %}" class="btn btn-primary float-right mb-3 mt-3" style="background-color: #CF910C; border-radius: 5px; border: none;">
+                        <i class="fas fa-add"></i> Add Action Plan
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No objectives found for this goal.</p>
+    {% endif %}
+</div>
+{% endblock %}

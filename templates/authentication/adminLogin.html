@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+    <div id="content">
+        <div class="module">
+            <h1>Custom Admin Login</h1>
+            <form method="post" action="{% url 'admin-login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="form-group">
+                    <input type="text" name="username" id="usernameField" class="form-control" placeholder="username" required>
+                    <div class="invalid-feedback" id="emailFeedback" style="display: none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="password" id="passwordField" class="form-control" placeholder="Department (Password)" required>
+                    <div class="invalid-feedback" id="passwordFeedback" style="display: none;"></div>
+                    <small class="float-right py-3" id="showPasswordToggle">Show password</small>
+                </div>
+                
+                <button type="submit" class="default">Log In</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

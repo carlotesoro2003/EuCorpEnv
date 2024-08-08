@@ -1,0 +1,77 @@
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" style="background-color: #610000;">
+    <div class="position-sticky pt-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'dashboard' %}">
+            <span data-feather="home"></span>
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'plans' %}">
+            <i class="fa-solid fa-file"></i>
+            Planning and Teams
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'risks' %}">
+            <span data-feather="shopping-cart"></span>
+            <i class="fa-solid fa-bolt"></i>
+            Risk Assessment 
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="users"></span>
+            <i class="fa-solid fa-lightbulb"></i>
+            Opportunities
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin:index' %}">
+            <span data-feather="file"></span>
+            <i class="fa-solid fa-user-plus"></i>
+            Manage Teams
+          </a>
+        </li>
+        
+
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <span>Saved reports</span>
+        <a class="link-secondary" href="#" aria-label="Add a new report">
+          <span data-feather="plus-circle"></span>
+        </a>
+      </h6>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text"></span>
+            Current month
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text"></span>
+            Last quarter
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text"></span>
+            Social engagement
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text"></span>
+            Year-end sale
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
