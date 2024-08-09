@@ -26,18 +26,20 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{% url 'opportunities' %}">
             <span data-feather="users"></span>
             <i class="fa-solid fa-lightbulb"></i>
             Opportunities
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'admin:index' %}">
-            <span data-feather="file"></span>
-            <i class="fa-solid fa-user-plus"></i>
-            Manage Teams
-          </a>
+          {% if user.is_superuser %}
+            <a class="nav-link" href="{% url 'admin:index' %}">
+              <span data-feather="file"></span>
+              <i class="fa-solid fa-user-plus"></i>
+              Manage Teams
+            </a>
+          {% endif %}
         </li>
         
 

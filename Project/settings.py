@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'leads',
     'plans',
     'risks',
+    'opportunities',
 ]
 
 MIDDLEWARE = [

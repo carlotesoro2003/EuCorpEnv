@@ -22,5 +22,6 @@ urlpatterns = [
     path('',include('dashboard.urls')),
     path('plans/', include('plans.urls')),
     path('risks/', include('risks.urls')),
+    path('opportunities/', include('opportunities.urls')),
     path('authentication/',include('authentication.urls'))
 ]

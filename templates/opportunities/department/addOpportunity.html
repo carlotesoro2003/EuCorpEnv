@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Strategic Objectives{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Add Opportunities</h1>
+    <p>Add your Objectives Here</p>
+
+    <table class="table  table-striped mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Opportunity Statement</th>
+                <th scope="col">Planned Actions</th>
+                <th scope="col">Performance Indicator/Outcomes</th>
+                <th scope="col">Key Persons</th>
+                <th scope="col">Target Output</th>
+                <th scope="col">Budget</th>  
+                <th scope="col">Time Frame</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for opportunity in opportunities %}
+            <tr>
+                <td>{{ opportunity.statement }}</td>
+                <td>{{ opportunity.plannedActions }}</td>
+                <td>{{ opportunity.kpi }}</td>
+                <td>{{ opportunity.keyPersons }}</td>
+                <td>{{ opportunity.targetOutput }}</td>
+                <td>{{ opportunity.budget }}</td>
+                <td>{{ opportunity.startDate }} to {{ opportunity.endDate }}</td>
+                <td><a href="" class="btn btn-primary" style="border-radius: 5px; border: none;">Edit</a></td>
+                <td><a href="{% url 'deleteOpportunity' opportunity_id=opportunity.opportunity_id %}" class="btn btn-danger" style="border-radius: 5px; border: none;">Delete</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No opportunities found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!--Input Form-->
+    <div class="mt-5">
+        <h4>Input your objectives here</h4>
+    </div>
+    <form method="post" action="" onsubmit="prepareFormData(event)">
+        {% csrf_token %}
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Opportunity Statement</th>
+                    <th scope="col">Planned Actions</th>
+                    <th scope="col">Performance Indicator/Outcomes</th>
+                    <th scope="col">Key Persons</th>
+                    <th scope="col">Target Output</th>
+                    <th scope="col">Budget</th>  
+                    <th scope="col">Time Frame</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td contenteditable="true" id="opportunityStatement" class="editable"></td>
+                    <td contenteditable="true" id="plannedActions" class="editable"></td>
+                    <td contenteditable="true" id="kpi" class="editable"></td>
+                    <td contenteditable="true" id="keyPersons" class="editable"></td>
+                    <td contenteditable="true" id="targetOutput" class="editable"></td>
+                    <td contenteditable="true" id="budget" class="editable"></td>
+                    <td id="timeFrame">
+                        <div class="input-container">
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" name="startDate" class="editable" />
+                            <label for="endDate">End Date:</label>
+                            <input type="date" id="endDate" name="endDate" class="editable" />
+                        </div>
+                    </td>                    
+                    
+                    <td>
+                        <button type="submit" class="btn btn-success" style="border-radius: 5px; border: none;"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <input type="hidden" name="opportunityStatement" id="hiddenOpportunityStatement">
+        <input type="hidden" name="plannedActions" id="hiddenPlannedActions">
+        <input type="hidden" name="kpi" id="hiddenKpi">
+        <input type="hidden" name="keyPersons" id="hiddenKeyPersons">
+        <input type="hidden" name="targetOutput" id="hiddenTargetOutput">
+        <input type="hidden" name="budget" id="hiddenBudget" required pattern="\d+(\.\d{1,2})?">
+    </form>
+</div>
+
+<script>
+    function prepareFormData(event) {
+        event.preventDefault();
+
+        document.getElementById('hiddenOpportunityStatement').value = document.getElementById('opportunityStatement').innerText.trim();
+        document.getElementById('hiddenPlannedActions').value = document.getElementById('plannedActions').innerText.trim();
+        document.getElementById('hiddenKpi').value = document.getElementById('kpi').innerText.trim();
+        document.getElementById('hiddenKeyPersons').value = document.getElementById('keyPersons').innerText.trim();
+        document.getElementById('hiddenTargetOutput').value = document.getElementById('targetOutput').innerText.trim();
+        document.getElementById('hiddenBudget').value = document.getElementById('budget').innerText.trim();
+        event.target.submit();
+    }
+</script>
+{% endblock %}
