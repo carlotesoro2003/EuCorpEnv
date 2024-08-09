@@ -43,6 +43,19 @@ def addPlan(request):
     return render(request, 'plans/addPlans.html')
 
 @login_required(login_url='authentication/login')
+def getKeyArea(request):
+    keyAreas = KeyAreas.objects.all()
+    context = {
+        'keyAreas' : keyAreas,
+    }
+    return render(request, 'plans/keyAreas.html', context)
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import StrategicGoals
+
+
+@login_required(login_url='authentication/login')
 def addStratGoal(request):
     if request.method == 'POST':
         form = StrategicGoalForm(request.POST)
@@ -68,17 +81,35 @@ def addStratGoal(request):
     }
     return render(request, 'plans/addStratGoals.html', context)
 
-@login_required(login_url='authentication/login')
-def getKeyArea(request):
-    keyAreas = KeyAreas.objects.all()
-    context = {
-        'keyAreas' : keyAreas,
-    }
-    return render(request, 'plans/keyAreas.html', context)
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import StrategicGoals
+@login_required(login_url='authentication/login')
+def editStratGoal(request, goal_id):
+    strategicGoal = get_object_or_404(StrategicGoals, pk=goal_id)
+
+    if request.method == 'POST':
+        form = StrategicGoalForm(request.POST, instance = strategicGoal)
+        if form.is_valid():
+            try:
+                with transaction.atomic():
+                    form.save()
+                    messages.success(request, 'Strategic Goal Updated Successfully')
+                    return redirect('plans')
+            except Exception as e:
+                messages.error(request, f'An error occured : {e}')
+        else:
+            messages.error(request, 'Please correct the errors below')
+    else:
+        form = StrategicGoalForm(instance=strategicGoal)
+
+    context = {
+        'form': form,
+        'strategicGoal' : strategicGoal
+    }
+
+    return render(request, 'plans/editStratGoals.html', context)
+   
+
+
 
 @login_required(login_url='authentication/login')
 def getStratGoal(request, id):

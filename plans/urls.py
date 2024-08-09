@@ -6,6 +6,7 @@ urlpatterns = [
     path('add-plans', views.addPlan, name="add-plans"),
     path('add-strat-goals',views.addStratGoal, name="addStratGoals"),
     path('key-areas',views.getKeyArea,name="keyAreas"),
+    path('editStrategicgoal/<int:goal_id>/', views.editStratGoal, name='editStrategicGoal'),
     path('strategicGoal/<int:id>/', views.getStratGoal, name='strategicGoal'),
     path('deleteStratGoal/<int:id>/', views.deleteStratGoal, name='deleteStratGoal'),
     path('createObjectives/<int:goal_id>/', views.createStratObjectives, name='createObjectives'),
