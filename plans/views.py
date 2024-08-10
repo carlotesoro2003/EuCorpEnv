@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import KeyAreas
-from leads.models import Lead
 from departments.models import DepartmentHeads
 from .models import StrategicGoals, KeyAreas, StrategicObjectives, ActionPlans
 from .forms import StrategicGoalForm

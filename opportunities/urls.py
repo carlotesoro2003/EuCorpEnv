@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.index, name="opportunities"),
     path('add-opportunity',views.addOpportunity, name="addOpportunity"),
     path('deleteOpportunity/<int:opportunity_id>/', views.deleteOpportunity, name='deleteOpportunity'),
+    path('getOpportunity/<int:id>/', views.getOpportunitiesbyHead, name='getOpportunitiesbyHead'),
 ]

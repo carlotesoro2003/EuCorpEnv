@@ -10,13 +10,14 @@ def index(request):
         # Get all department heads
         heads = DepartmentHeads.objects.all()
         
-        # Create a list of dictionaries containing department and the count of opportunities
+        # Create a list of dictionaries containing department, the count of opportunities, and head ID
         department_opportunity_counts = []
         for head in heads:
             opportunity_count = Opportunities.objects.filter(head=head).count()
             department_opportunity_counts.append({
                 'department': head.department,
-                'count': opportunity_count
+                'count': opportunity_count,
+                'head_id': head.id  # Include the head ID for URL linking
             })
         
         context = {
@@ -76,4 +77,13 @@ def deleteOpportunity(request, opportunity_id):
 
     return redirect('addOpportunity')  # Redirect to the list view
 
+def getOpportunitiesbyHead(request, id):
+    head = get_object_or_404(DepartmentHeads, pk=id)
+    opportunities = Opportunities.objects.filter(head=head)
 
+    context = {
+        'head': head,
+        'opportunities': opportunities
+    }
+
+    return render(request, 'opportunities/admin/allOpportunities.html', context)

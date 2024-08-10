@@ -22,7 +22,7 @@
           <!-- User First Name and Logout Form -->
           <div class="nav-item d-flex align-items-center">
               <!-- Display User First Name -->
-              <span class="navbar-text me-3">{{ first_name }}</span>
+              <span class="navbar-text me-3">Welcome, {{ first_name }}</span>
               <!-- Logout Form -->
               <form action="{% url 'logout' %}" method="post" class="mb-0">
                   {% csrf_token %}
